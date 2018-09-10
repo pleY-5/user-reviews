@@ -104,25 +104,6 @@ var business = [
   "Chef's Cafe"
 ];
 
-var restaurant = {
-  name: "",
-  review: {
-    count_starRatings: faker.random.number({ min: 0, max: 5 }),
-    date: faker.date.recent(),
-    text_review: faker.lorem.paragraph(),
-    count_checkin: faker.random.number({ min: 0, max: 8 }),
-    user: {
-      name: faker.name.findName(),
-      city: faker.address.city(),
-      state: faker.address.stateAbbr(),
-      profile_image: faker.image.avatar(),
-      count_friends: faker.random.number({ min: 0, max: 750 }),
-      count_reviews: faker.random.number({ min: 0, max: 450 }),
-      count_photos: faker.random.number({ min: 0, max: 150 })
-    }
-  }
-};
-
 var restaurant = function() {
   this.name = business[Math.floor(Math.random() * business.length)];
   this.review = {};
