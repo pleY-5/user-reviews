@@ -26,10 +26,6 @@ module.exports = {
           localIdentName: "[name]__[local]___[hash:base64:5]"
         }
       }
-      // {
-      //   test: /\.css$/,
-      //   use: ["style-loader", "css-loader"]
-      // }
     ]
   }
 };

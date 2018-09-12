@@ -67,7 +67,7 @@
       "enzyme-to-json/serializer"
     ],
     "setupFiles": [
-      "./client/setupTests.js"
+      "<rootDir>/setupTests.js"
     ],
     "moduleNameMapper": {
       "^.+\\.(css|scss)$": "identity-obj-proxy"
