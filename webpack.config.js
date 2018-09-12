@@ -1,5 +1,5 @@
 module.exports = {
-  entry: __dirname + "/client/App.jsx",
+  entry: __dirname + "/client/Index.jsx",
   output: {
     filename: "bundle.js",
     path: __dirname + "/public"
@@ -13,10 +13,23 @@ module.exports = {
           loader: "babel-loader"
         }
       },
+
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        loader: "style-loader"
+      },
+      {
+        test: /\.css$/,
+        loader: "css-loader",
+        query: {
+          modules: true,
+          localIdentName: "[name]__[local]___[hash:base64:5]"
+        }
       }
+      // {
+      //   test: /\.css$/,
+      //   use: ["style-loader", "css-loader"]
+      // }
     ]
   }
 };
