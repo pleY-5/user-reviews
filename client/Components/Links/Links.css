@@ -16,3 +16,7 @@ ul {
 .atags:hover {
   text-decoration: underline;
 }
+
+#linksContainer > ul {
+  visibility: hidden;
+}

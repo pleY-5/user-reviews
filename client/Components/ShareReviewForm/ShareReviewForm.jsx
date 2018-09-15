@@ -1,9 +1,16 @@
-import React from " react";
+import React from "react";
 
 const ShareReviewForm = () => {
   return (
     <div>
-      <h1>Form 1</h1>
+      <h3>Share review</h3>
+      <hr />
+      <button>Share on Facebook</button>
+      <button>Share on Twitter</button>
+      <input type="text" />
+      <hr />
+      OR
+      <hr />
     </div>
   );
 };

@@ -18,6 +18,7 @@
 }
 
 .userInfo {
+  margin-top: -4%;
   margin-left: 10px;
   font-size: 10px;
 }
@@ -54,11 +55,3 @@ span {
   color: #f15c00;
   text-shadow: 0 1px 1px black;
 }
-
-/* .listOfLinks {
-  visibility: hidden;
-}
-
-.listOfLinks:hover {
-  visibility: visible;
-} */
