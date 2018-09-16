@@ -4,9 +4,7 @@ import Modal from "../Modal/Modal.jsx";
 import Links from "../Links/Links.jsx";
 import ShareReviewForm from "../ShareReviewForm/ShareReviewForm.jsx";
 import EmbedReviewForm from "../EmbedReviewForm/EmbedReviewForm.jsx";
-import ComplimentForm from "../ComplimentForm/ComplimentForm.jsx";
-import SendMessageForm from "../SendMessageForm/SendMessageForm.jsx";
-import FollowUserForm from "../FollowUserForm/FollowUserForm.jsx";
+import TripleForms from "../TripleForms/TripleForms.jsx";
 
 class User extends Component {
   constructor(props) {
@@ -15,6 +13,7 @@ class User extends Component {
       isModalOpen: false,
       formOne: false,
       formTwo: false,
+      tripleForms: false,
       formThree: false,
       formFour: false,
       formFive: false
@@ -42,6 +41,7 @@ class User extends Component {
 
   handleFormOne() {
     this.setState({
+      tripleForms: false,
       formTwo: false,
       formThree: false,
       formFour: false,
@@ -52,6 +52,7 @@ class User extends Component {
 
   handleFormTwo() {
     this.setState({
+      tripleForms: false,
       formOne: false,
       formThree: false,
       formFour: false,
@@ -62,6 +63,7 @@ class User extends Component {
 
   handleFormThree() {
     this.setState({
+      tripleForms: true,
       formOne: false,
       formTwo: false,
       formFour: false,
@@ -72,6 +74,7 @@ class User extends Component {
 
   handleFormFour() {
     this.setState({
+      tripleForms: true,
       formOne: false,
       formTwo: false,
       formThree: false,
@@ -82,6 +85,7 @@ class User extends Component {
 
   handleFormFive() {
     this.setState({
+      tripleForms: true,
       formOne: false,
       formTwo: false,
       formThree: false,
@@ -92,10 +96,21 @@ class User extends Component {
 
   render() {
     const formOne = <ShareReviewForm />;
-    const formTwo = <EmbedReviewForm />;
-    const formThree = <ComplimentForm />;
-    const formFour = <SendMessageForm />;
-    const formFive = <FollowUserForm />;
+    const formTwo = (
+      <EmbedReviewForm
+        current={this.props.current}
+        user={this.props.user}
+        ratings={this.props.ratings}
+      />
+    );
+    const formThree = (
+      <TripleForms
+        user={this.props.user}
+        three={this.state.formThree}
+        four={this.state.formFour}
+        five={this.state.formFive}
+      />
+    );
     return (
       <div id={styles.usersContainer}>
         <div className={styles.users}>
@@ -111,21 +126,17 @@ class User extends Component {
               {this.props.user.city}, {this.props.user.state}
             </p>
             <p className={styles.userBio}>
-              <i id={styles.icons} className="fa fa-users" aria-hidden="true" />
+              <i className="fa fa-users" aria-hidden="true" />
               <span> {this.props.user.count_friends} </span>
               friends
             </p>
             <p className={styles.userBio}>
-              <i id={styles.icons} className="fa fa-star" aria-hidden="true" />
+              <i className="fa fa-star" aria-hidden="true" />
               <span> {this.props.user.count_reviews} </span>
               reviews
             </p>
             <p className={styles.userBio}>
-              <i
-                id={styles.icons}
-                className="fa fa-camera"
-                aria-hidden="true"
-              />
+              <i className="fa fa-camera" aria-hidden="true" />
               <span> {this.props.user.count_photos} </span>
               photos
             </p>
@@ -133,14 +144,14 @@ class User extends Component {
         </div>
         <Modal
           isModalOpen={this.state.isModalOpen}
-          closeModal={this.closeModal}
+          // closeModal={this.closeModal}
         >
-          <p onClick={this.closeModal}>X</p>
+          <div className={styles.closeModal} onClick={this.closeModal}>
+            x
+          </div>
           {this.state.formOne ? formOne : null}
           {this.state.formTwo ? formTwo : null}
-          {this.state.formThree ? formThree : null}
-          {this.state.formFour ? formFour : null}
-          {this.state.formFive ? formFive : null}
+          {this.state.tripleForms ? formThree : null}
         </Modal>
         <div className={styles.listOfLinks}>
           <Links

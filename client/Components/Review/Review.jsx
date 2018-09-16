@@ -23,6 +23,7 @@ class Review extends Component {
         <div id={styles.users}>
           <User
             current={this.props.current}
+            ratings={this.props.cur.review}
             user={this.props.cur.review.user}
           />
         </div>
