@@ -15,6 +15,7 @@ module.exports = {
       Review.findById(id, (err, d) => {
         if (err) return console.log(err);
         d.save((err, newDoc) => {
+          console.log(newDoc);
           if (err) return console.log(err);
           // res.send(newDoc);
         });
