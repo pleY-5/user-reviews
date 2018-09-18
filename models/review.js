@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const mockData = require("../data/data.js");
+// const mockData = require("../data.js");
 
 let userSchema = new mongoose.Schema({
   name: String,
@@ -23,6 +23,12 @@ let restaurantSchema = new mongoose.Schema({
   name: String,
   reviewsCount: Number,
   ratings: Number,
+  useful_count: Number,
+  funny_count: Number,
+  cool_count: Number,
+  useful_clicked: Boolean,
+  funny_clicked: Boolean,
+  cool_clicked: Boolean,
   review: reviewsSchema
 });
 
