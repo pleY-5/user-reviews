@@ -11,11 +11,12 @@ class App extends Component {
     this.state = {
       allData: [],
       current: [],
-      vote: false
+      average: 0
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleCount = this.handleCount.bind(this);
-    this.handlePost = this.handlePost.bind(this);
+    // this.handlePost = this.handlePost.bind(this);
+    this.handleAverage = this.handleAverage.bind(this);
   }
 
   handleSearch(inputVal) {
@@ -23,64 +24,77 @@ class App extends Component {
     var output = this.state.allData.filter(res => {
       return res.name.toLowerCase().includes(inputVal);
     });
+    // this.handleAverage(output);
     this.setState({
       current: output
     });
   }
 
+  handleAverage(output) {
+    var current = output;
+    var total = 0;
+    var average = 0;
+    current.map(c => {
+      total += c.review.count_starRatings;
+      average = Math.round(total / current.length);
+    });
+    this.setState({ average: average });
+  }
+
   handleCount(id, btn) {
-    // console.log(id, btn);
     let one = 1;
     const updatedReviews = this.state.current;
     for (var i = 0; i < updatedReviews.length; i++) {
       const curReview = updatedReviews[i];
       if (id === curReview._id) {
-        if (id === curReview._id && btn === "useful") {
+        if (btn === "useful") {
           curReview.useful_count = curReview.useful_clicked
             ? curReview.useful_count - 1
             : curReview.useful_count + 1;
           curReview.useful_clicked = !curReview.useful_clicked;
-          // this.setState({ vote: true });
         }
-        if (btn === "funny" && id === curReview._id) {
+        if (btn === "funny") {
           curReview.funny_count = curReview.funny_clicked
             ? curReview.funny_count - 1
             : curReview.funny_count + 1;
           curReview.funny_clicked = !curReview.funny_clicked;
-          // this.setState({ vote: true });
         }
-        if (btn === "cool" && id === curReview._id) {
+        if (btn === "cool") {
           curReview.cool_count = curReview.cool_clicked
             ? curReview.cool_count - 1
             : curReview.cool_count + 1;
           curReview.cool_clicked = !curReview.cool_clicked;
-          // this.setState({ vote: true });
         }
+        curReview.vote = true;
       }
     }
     this.setState({ current: updatedReviews });
     this.handlePost(updatedReviews);
   }
 
-  handlePost(data) {
-    axios
-      .post("/reviews", {
-        data: data
-      })
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
+  // handlePost(data) {
+  //   axios
+  //     .post("/reviews", {
+  //       data: data
+  //     })
+  //     .then(response => {
+  //       console.log(response);
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // }
 
   componentDidMount() {
     axios
       .get("/reviews")
       .then(response => {
+        const allData = response.data.map(rev => {
+          rev.vote = false;
+          return rev;
+        });
         this.setState({
-          allData: response.data
+          allData
         });
       })
       .catch(error => {
@@ -95,7 +109,7 @@ class App extends Component {
         <ReviewEntry
           current={this.state.current}
           handleCount={this.handleCount}
-          vote={this.state.vote}
+          average={this.state.average}
         />
       </div>
     );

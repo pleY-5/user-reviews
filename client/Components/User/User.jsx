@@ -96,7 +96,12 @@ class User extends Component {
 
   render() {
     const formOne = <ShareReviewForm />;
-    const formTwo = <EmbedReviewForm current={this.props.current} />;
+    const formTwo = (
+      <EmbedReviewForm
+        current={this.props.current}
+        average={this.props.average}
+      />
+    );
     const formThree = (
       <TripleForms
         user={this.props.current.review.user}

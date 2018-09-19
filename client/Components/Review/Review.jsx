@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import User from "../User/User.jsx";
 import Ratings from "../Ratings/Ratings.jsx";
 import ReviewText from "../ReviewText/ReviewText.jsx";
@@ -16,15 +16,11 @@ const Review = props => {
           <ReviewText review={props.cur.review} />
         </div>
         <div>
-          <Buttons
-            counts={props.cur}
-            handleCount={props.handleCount}
-            vote={props.vote}
-          />
+          <Buttons counts={props.cur} handleCount={props.handleCount} />
         </div>
       </div>
       <div id={styles.users}>
-        <User current={props.cur} />
+        <User current={props.cur} average={props.average} />
       </div>
     </div>
   );

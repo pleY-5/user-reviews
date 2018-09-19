@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./EmbedReviewForm.css";
 
 const EmbedReviewForm = props => {
-  const rating = props.current.ratings;
+  const rating = props.average;
   const userStars = props.current.review.count_starRatings;
   const defaultVal =
     "<span class='yelp-review' data-review-id='I4AOXlup93T_cx-5dsyU3g' data-hostname='www.yelp.com'>Read <a href='https://www.yelp.com/user_details?userid=mmoUnXJ69_sD4S4e851KkQ' rel='nofollow noopener'>Nani R.</a>'s <a href='https://www.yelp.com/biz/phantom-ales-anaheim?hrid=I4AOXlup93T_cx-5dsyU3g' rel='nofollow noopener'>review</a> of <a href='https://www.yelp.com/biz/N7Cos0Y2w_i1tzDma66fNQ' rel='nofollow noopener'>Phantom Ales</a> on <a href='https://www.yelp.com' rel='nofollow noopener'>Yelp</a><script async='async' src='https://www.yelp.com/embed/widgets.js' type='text/javascript'></script></span>";

@@ -5,7 +5,7 @@ import axios from "axios";
 const Buttons = props => {
   return (
     <div className={styles.btnDiv}>
-      {props.vote ? (
+      {props.counts.vote ? (
         <p className={styles.thanks}>Thanks for your vote!</p>
       ) : (
         <p>Was this review ...?</p>

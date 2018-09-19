@@ -13,7 +13,7 @@ const ReviewEntry = props => {
             <Review
               cur={cur}
               handleCount={props.handleCount}
-              vote={props.vote}
+              average={props.average}
             />
           </div>
         );

@@ -33,10 +33,5 @@ let restaurantSchema = new mongoose.Schema({
 });
 
 let Restaurant = mongoose.model("Restaurant", restaurantSchema);
-// mockData.forEach(obj => {
-//   Restaurant.create(obj, err => {
-//     if (err) console.log(err);
-//     console.log("saved!");
-//   });
-// });
+
 module.exports = Restaurant;
