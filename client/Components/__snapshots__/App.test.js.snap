@@ -8,9 +8,9 @@ exports[`<App /> renders correctly 1`] = `
     handleSearch={[Function]}
   />
   <ReviewEntry
+    average={0}
     current={Array []}
     handleCount={[Function]}
-    vote={false}
   />
 </div>
 `;
