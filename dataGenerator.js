@@ -114,7 +114,7 @@ business.forEach(bizz => {
 var restaurant = function() {
   var resName = newArr[Math.floor(Math.random() * newArr.length)];
   this.name = resName[0];
-  this.id = resName[1];
+  this.restaurantId = resName[1];
   this.ratings = faker.random.number({
     min: 1,
     max: 5

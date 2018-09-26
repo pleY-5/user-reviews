@@ -2,6 +2,12 @@
 
 > Project description
 
+## CRUD API
+1. GET -    /api/reviews/:nameOrId
+2. POST -   /api/reviews
+3. DELETE - /api/reviews/:id 
+4. PUT -    /api/reviews/:id
+
 ## Related Projects
 
   - https://github.com/teamName/repo

@@ -17,7 +17,7 @@ module.exports = {
       res.send(data);
     });
   },
-  
+
   add: (req, res) => {
     const review = JSON.parse(req.body.review);
     const subReview = review.review;
@@ -25,7 +25,7 @@ module.exports = {
     console.log(review.review);
 
     const newReview = new Review({
-      id: review.id,
+      restaurantId: review.restaurantId,
       name: review.name,
       reviewsCount: review.reviewsCount,
       ratings: review.ratings,
@@ -63,4 +63,26 @@ module.exports = {
     });
   },
 
+  remove: (req, res) => {
+    const id = req.params.nameOrId;
+    Review.findByIdAndRemove(id, (err) => {
+      if (err) {
+        console.error(err);
+      }
+
+      res.sendStatus(202);
+    });
+  },
+
+  update: (req, res) => {
+    const id = req.params.nameOrId;
+    const updateAttributes = JSON.parse(req.body.review);
+    Review.findByIdAndUpdate(id, updateAttributes, (err) => {
+      if (err) {
+        console.error(err);
+      }
+
+      res.sendStatus(204);
+    });
+  }
 };
