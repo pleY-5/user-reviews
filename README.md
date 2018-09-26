@@ -3,10 +3,22 @@
 > Project description
 
 ## CRUD API
-1. GET -    /api/reviews/:nameOrId
-2. POST -   /api/reviews
-3. DELETE - /api/reviews/:id 
-4. PUT -    /api/reviews/:id
+
+### Create
+Add a review to the database
+1. POST -   /api/reviews
+
+### Read
+Retrieve all the reviews associated to a restaurant with name or id of a restaurant
+2. GET -    /api/reviews/:nameOrId
+
+### Update
+Update a review with its id
+3. PUT -    /api/reviews/:id
+
+### Delete
+Delete a review with its id
+4. DELETE - /api/reviews/:id 
 
 ## Related Projects
 
