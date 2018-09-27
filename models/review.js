@@ -20,7 +20,7 @@ let reviewsSchema = new mongoose.Schema({
 });
 
 let restaurantSchema = new mongoose.Schema({
-  id: Number,
+  restaurantId: Number,
   name: String,
   reviewsCount: Number,
   ratings: Number,

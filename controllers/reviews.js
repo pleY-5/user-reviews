@@ -16,38 +16,73 @@ module.exports = {
       if (err) return console.log(err);
       res.send(data);
     });
+  },
+
+  add: (req, res) => {
+    const review = JSON.parse(req.body.review);
+    const subReview = review.review;
+    const user = review.review.user;
+    console.log(review.review);
+
+    const newReview = new Review({
+      restaurantId: review.restaurantId,
+      name: review.name,
+      reviewsCount: review.reviewsCount,
+      ratings: review.ratings,
+      useful_count: review.useful_count,
+      funny_count: review.funny_count,
+      cool_count: review.cool_count,
+      useful_clicked: review.useful_clicked,
+      funny_clicked: review.funny_clicked,
+      cool_clicked: review.cool_clicked,
+      review: {
+        count_starRatings: subReview.count_starRatings,
+        date: subReview.date,
+        text_review: subReview.text_review,
+        count_checkin: subReview.count_checkin,
+        user: {
+          name: user.userName,
+          city: user.reviewcity,
+          state: user.state,
+          profile_image: user.profile_image,
+          count_friends: user.count_friends,
+          count_reviews: user.count_reviews,
+          count_photos: user.count_photos,
+        }
+      }
+    });
+    
+    newReview.save((err, data) => {
+      if (err) {
+        console.error(err);
+      }
+
+      console.log(data);
+
+      res.send(201);
+    });
+  },
+
+  remove: (req, res) => {
+    const id = req.params.nameOrId;
+    Review.findByIdAndRemove(id, (err) => {
+      if (err) {
+        console.error(err);
+      }
+
+      res.sendStatus(202);
+    });
+  },
+
+  update: (req, res) => {
+    const id = req.params.nameOrId;
+    const updateAttributes = JSON.parse(req.body.review);
+    Review.findByIdAndUpdate(id, updateAttributes, (err) => {
+      if (err) {
+        console.error(err);
+      }
+
+      res.sendStatus(204);
+    });
   }
-
-  // update: (req, res) => {
-  //   // console.log(req.body.data);
-  //   var name = req.body.data[0].name;
-  //   console.log(name);
-  // var reviews = req.body.data;
-  // Review.findOneAndUpdate({ name: name }, { $set: {} }, (err, review) => {
-  //   // console.log(review);
-  //   if (err) return console.log(err);
-  //   review.review = reviews;
-  // review.save(err => {
-  //   if (err) return console.log(err);
-  //   console.log("saved");
-  //   res.send(200);
-  // });
-  // });
-  // let data = req.body.data;
-
-  // data.forEach(d => {
-  //     Review.findOneAndUpdate({ name: name }, { $set: {
-  //       useful_count: req.body.count,
-  //       review.$._id
-  //     } }, (err, d) => {
-  //       if (err) return console.log(err);
-  //       // d.save(err => {
-  //       //   if (err) return console.log(err);
-  //       //   console.log("saved");
-  //       //   res.send(200);
-  //       // });
-  //     });
-  //   // });
-  // }
 };
-// Model.findOneAndUpdate({ name : 'myBook', "data._id" : 'chapter' }, { "data.$.name" : 'Chapter 1' });
