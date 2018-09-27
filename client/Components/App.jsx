@@ -15,7 +15,6 @@ class App extends Component {
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleCount = this.handleCount.bind(this);
-    // this.handlePost = this.handlePost.bind(this);
     this.handleAverage = this.handleAverage.bind(this);
   }
 
@@ -69,21 +68,7 @@ class App extends Component {
       }
     }
     this.setState({ current: updatedReviews });
-    // this.handlePost(updatedReviews);
   }
-
-  // handlePost(data) {
-  //   axios
-  //     .post("/reviews", {
-  //       data: data
-  //     })
-  //     .then(response => {
-  //       console.log(response);
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // }
 
   componentDidMount() {
     var id = window.location.pathname;
@@ -111,7 +96,6 @@ class App extends Component {
   render() {
     return (
       <div id={styles.wrapper}>
-        {/* <Search handleSearch={this.handleSearch} /> */}
         {this.state.current.length > 0 && (
           <ReviewEntry
             current={this.state.current}

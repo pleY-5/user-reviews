@@ -24,4 +24,5 @@ coverage
 build/
 dist/
 .env
-seeds/restaurants.json
+seeds/
+helpers/
