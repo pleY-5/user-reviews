@@ -25,4 +25,4 @@ build/
 dist/
 .env
 seeds/
-helpers/
+# dataGeneration/reviews/
