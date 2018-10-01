@@ -1,4 +1,4 @@
-const { client } = require('pg.js');
+const { client } = require('./pg');
 const path = require('path');
 
 const restaurantsPath = path.join(__dirname, '..', 'dataGeneration', 'restaurants', 'restaurantNames.csv');
@@ -9,5 +9,6 @@ client.query(`COPY restaurants FROM '${restaurantsPath}' DELIMITER ',' CSV HEADE
   }
 
   console.log('done');
+  client.end();
 });
 

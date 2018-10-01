@@ -40,16 +40,12 @@ const getRandomIntInclusive = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min; 
 };
 
-// const generateHeader = () => {
-//   return 'restaurantId,name,reviewsCount,usefulCount,funnyCount,coolCount,ratings,user,usefulClicked,funnyClicked,coolClicked,reviewDate,reviewText,reviewCheckinCount\n'
-// }
+const generateHeader = () => {
+  return `review_id,restaurant_id,restaurant_name,user_id,date,count_star_ratings,count_checkin,ratings,useful_count,funny_count,cool_count,useful_clicked,funny_clicked,cool_clicked,reviews_count,review\n`;
+}
 
-// const generateReview = (id, name) => {
-//   return `${id},${name},${getRandomIntInclusive(0, 750)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 1000000)},false,false,false,${faker.date.between('2015-01-01', '2018-9-30')},${reviews[getRandomIntInclusive(0, 29)]},${getRandomIntInclusive(0, 8)}\n`
-// };
-
-const generateReview = (restaurantId, restaurantName) => {
-  return `${restaurantId},${restaurantName},${getRandomIntInclusive(0, 1000000)},${faker.date.between('2015-01-01', '2018-9-30')},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},false,false,false,${reviews[getRandomIntInclusive(0, 29)]}\n`;
+const generateReview = (reviewId, restaurantId, restaurantName) => {
+  return `${reviewId},${restaurantId},${restaurantName},${getRandomIntInclusive(0, 1000000)},${faker.date.between('2015-01-01', '2018-9-30')},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 8)},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},false,false,false,${getRandomIntInclusive(0, 750)},${reviews[getRandomIntInclusive(0, 29)]}\n`;
 };
 
 const generateMillionNames = (letter) => {
@@ -70,25 +66,28 @@ const generateAllReviews = (fileNumber) => {
 
   let csvString = '';
   const set = Math.floor((fileNumber - 1) / 5);
-  let id = set * 1000000 + 1;
+  let restaurant_id = set * 1000000 + 1;
+  let review_id = (fileNumber - 1) * 1000000;
 
   let restaurantNames = generateMillionNames(letters[set]);
 
   for (let i = 0; i < 1000000; i++) {
-    const review = generateReview(id, restaurantNames[i])
-    id++;
+    const review = generateReview(review_id, restaurant_id, restaurantNames[i])
+    restaurant_id++;
+    review_id++;
     csvString += review;
   }
 
-  fs.appendFile(`./reviews/review${fileNumber}.csv`, csvString, (err) => {
-    if (err) {
-      console.error(err);
-    }
-
-    console.log(fileNumber);
-    generateAllReviews(fileNumber + 1);
+  fs.appendFile(`./reviews/review${fileNumber}.csv`, generateHeader(), (err) => {
+    fs.appendFile(`./reviews/review${fileNumber}.csv`, csvString, (err) => {
+      if (err) {
+        console.error(err);
+      }
+  
+      console.log(fileNumber);
+      generateAllReviews(fileNumber + 1);
+    });
   });
-
 };
 
 generateAllReviews(1);

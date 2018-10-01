@@ -2,13 +2,16 @@ const faker = require('faker');
 const stringify = require('csv-stringify');
 const fs = require('fs');
 
-const generateMillionNames = (letter) => {
+const generateMillionNames = (letter, num) => {
+    let id = num * 1000000 + 1;
+    let csvString = '';
 
-    var allPossibilities = [];
     for (let i = 0; i < 1000000; i++) {
-        allPossibilities.push([('TuLan' + i + letter).split(' ').join('')]);
+      const currentStr = `${id},TuLan${i}${letter}\n`
+      csvString += currentStr;
+      id++;
     }
-    return allPossibilities;
+    return csvString;
 };
 
 const generateRestaurantNames = (num = 0) => {
@@ -17,19 +20,13 @@ const generateRestaurantNames = (num = 0) => {
   if (num === 10) {
     console.log('done');
     return;
-  }
-  else {
-    stringify(generateMillionNames(letters[num]), (err, data) => {
+  } else {
+    const csvString = generateMillionNames(letters[num], num);
+    fs.appendFile('./restaurants/restaurantNames.csv', csvString, (err) => {
       if (err) {
         console.log(err);
-      } else {
-        fs.appendFile('./restaurants/restaurantNames.csv', data, (err) => {
-          if (err) {
-            console.log(err);
-          }
-          generateRestaurantNames(num + 1);
-        });
       }
+      generateRestaurantNames(num + 1);
     });
   }
 }
