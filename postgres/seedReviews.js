@@ -1,8 +1,6 @@
 const fs = require('fs');
-const path
+const path = require('path');
 const { client } = require('./pg');
-
-const dirPath = path.join(__dirname, '..', 'dataGeneration', 'reviews');
 
 const seedReviews = (num = 1) => {
   if (num === 51) {
@@ -16,10 +14,12 @@ const seedReviews = (num = 1) => {
   client.query(`COPY reviews FROM '${reviewPath}' DELIMITER ',' CSV HEADER`, (err, res) => {
     if (err) {
       console.error(err.stack);
+      return;
     }
   
-    console.log('done');
+    console.log(`review${num}.csv seeded into database`);
     seedReviews(num + 1);
   });
-  
 }
+
+seedReviews();

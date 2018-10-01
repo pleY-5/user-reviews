@@ -45,7 +45,7 @@ const generateHeader = () => {
 }
 
 const generateReview = (reviewId, restaurantId, restaurantName) => {
-  return `${reviewId},${restaurantId},${restaurantName},${getRandomIntInclusive(0, 1000000)},${faker.date.between('2015-01-01', '2018-9-30')},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 8)},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},false,false,false,${getRandomIntInclusive(0, 750)},${reviews[getRandomIntInclusive(0, 29)]}\n`;
+  return `${reviewId},${restaurantId},${restaurantName},${getRandomIntInclusive(0, 999999)},${faker.date.between('2015-01-01', '2018-9-30')},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 8)},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},false,false,false,${getRandomIntInclusive(0, 750)},"${reviews[getRandomIntInclusive(0, 29)]}"\n`;
 };
 
 const generateMillionNames = (letter) => {
