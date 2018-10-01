@@ -40,26 +40,16 @@ const getRandomIntInclusive = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min; 
 };
 
-// const generateUser = () => {
-//   return {
-//     user: {
-//       name: faker.name.findName(),
-//       city: faker.address.city(),
-//       state: faker.address.stateAbbr(),
-//       profileImage: faker.image.avatar(),
-//       countFriends: getRandomIntInclusive(0, 750),
-//       countReviews: getRandomIntInclusive(0, 450),
-//       countPhotos: getRandomIntInclusive(0, 150),
-//     }
-//   }
+// const generateHeader = () => {
+//   return 'restaurantId,name,reviewsCount,usefulCount,funnyCount,coolCount,ratings,user,usefulClicked,funnyClicked,coolClicked,reviewDate,reviewText,reviewCheckinCount\n'
+// }
+
+// const generateReview = (id, name) => {
+//   return `${id},${name},${getRandomIntInclusive(0, 750)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 1000000)},false,false,false,${faker.date.between('2015-01-01', '2018-9-30')},${reviews[getRandomIntInclusive(0, 29)]},${getRandomIntInclusive(0, 8)}\n`
 // };
 
-const generateHeader = () => {
-  return 'restaurantId,name,reviewsCount,usefulCount,funnyCount,coolCount,ratings,user,usefulClicked,funnyClicked,coolClicked,reviewDate,reviewText,reviewCheckinCount\n'
-}
-
-const generateReview = (id, name) => {
-  return `${id},${name},${getRandomIntInclusive(0, 750)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 1000000)},false,false,false,${faker.date.between('2015-01-01', '2018-9-30')},${reviews[getRandomIntInclusive(0, 29)]},${getRandomIntInclusive(0, 8)}\n`
+const generateReview = (restaurantId, restaurantName) => {
+  return `${restaurantId},${restaurantName},${getRandomIntInclusive(0, 1000000)},${faker.date.between('2015-01-01', '2018-9-30')},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},false,false,false,${reviews[getRandomIntInclusive(0, 29)]}\n`;
 };
 
 const generateMillionNames = (letter) => {
@@ -74,6 +64,7 @@ const generateAllReviews = (fileNumber) => {
   const letters = 'abcdefghij'.split('');
 
   if (fileNumber === 51) {
+    console.log('done');
     return;
   }
 
@@ -89,16 +80,15 @@ const generateAllReviews = (fileNumber) => {
     csvString += review;
   }
 
-  fs.appendFile(`./reviews/${fileNumber}.csv`, generateHeader(), (err) => {
-    fs.appendFile(`./reviews/${fileNumber}.csv`, csvString, (err) => {
-      if (err) {
-        console.error(err);
-      }
-  
-      console.log(fileNumber);
-      generateAllReviews(fileNumber + 1);
-    });
-  })
+  fs.appendFile(`./reviews/review${fileNumber}.csv`, csvString, (err) => {
+    if (err) {
+      console.error(err);
+    }
+
+    console.log(fileNumber);
+    generateAllReviews(fileNumber + 1);
+  });
+
 };
 
 generateAllReviews(1);

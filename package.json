@@ -29,8 +29,12 @@
     "nodemon": "^1.18.4",
     "objects-to-csv": "^1.0.1",
     "path": "^0.12.7",
+    "pg": "^7.4.3",
+    "pg-copy-streams": "^1.2.0",
+    "pg-hstore": "^2.3.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
+    "sequelize": "^4.39.0",
     "styled-components": "^3.4.6",
     "supertest": "^3.3.0"
   },
