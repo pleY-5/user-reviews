@@ -13,6 +13,7 @@ const client = new pg.Client({
 client.connect((err) => {
   if (err) {
     console.error('connection error', err.stack);
+    return;
   } else {
     console.log('connected');
   }

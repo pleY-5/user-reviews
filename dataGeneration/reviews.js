@@ -41,11 +41,11 @@ const getRandomIntInclusive = (min, max) => {
 };
 
 const generateHeader = () => {
-  return `review_id,restaurant_id,restaurant_name,user_id,date,count_star_ratings,count_checkin,ratings,useful_count,funny_count,cool_count,useful_clicked,funny_clicked,cool_clicked,reviews_count,review\n`;
+  return `review_id,restaurant_id,restaurant_name,user_id,date,count_star_ratings,count_checkin,ratings,useful_count,funny_count,cool_count,reviews_count,review\n`;
 }
 
 const generateReview = (reviewId, restaurantId, restaurantName) => {
-  return `${reviewId},${restaurantId},${restaurantName},${getRandomIntInclusive(0, 999999)},${faker.date.between('2015-01-01', '2018-9-30')},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 8)},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},false,false,false,${getRandomIntInclusive(0, 750)},"${reviews[getRandomIntInclusive(0, 29)]}"\n`;
+  return `${reviewId},${restaurantId},${restaurantName},${getRandomIntInclusive(0, 999999)},${faker.date.between('2015-01-01', '2018-9-30')},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 8)},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 750)},"${reviews[getRandomIntInclusive(0, 29)]}"\n`;
 };
 
 const generateMillionNames = (letter) => {
