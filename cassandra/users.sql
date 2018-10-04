@@ -1,0 +1,1 @@
+COPY yelp.reviews (user_id, username, city, state, profile_image, count_friends, count_reviews, count_photo) FROM '/Users/charliephan/hackreactor/reviews1/dataGeneration/users/user.csv' with HEADER=TRUE;

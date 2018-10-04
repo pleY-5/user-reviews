@@ -1,8 +1,5 @@
 const faker = require('faker');
 const fs = require('fs');
-const async = require('async');
-const stringify = require('csv-stringify');
-const path = require('path');
 
 const reviews = [
   'Lorem ipsum dolor amet paleo dreamcatcher sustainable migas swag shaman. Pitchfork austin next level shabby chic pok pok jean shorts pork belly, church-key yuccie mumblecore hell of.',
@@ -43,26 +40,12 @@ const getRandomIntInclusive = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min; 
 };
 
-// const generateUser = () => {
-//   return {
-//     user: {
-//       name: faker.name.findName(),
-//       city: faker.address.city(),
-//       state: faker.address.stateAbbr(),
-//       profileImage: faker.image.avatar(),
-//       countFriends: getRandomIntInclusive(0, 750),
-//       countReviews: getRandomIntInclusive(0, 450),
-//       countPhotos: getRandomIntInclusive(0, 150),
-//     }
-//   }
-// };
-
-const generateHeader = (fileNumber) => {
-  return 'restaurantId,name,reviewsCount,usefulCount,funnyCount,coolCount,ratings,user,usefulClicked,funnyClicked,coolClicked,reviewDate,reviewText,reviewCheckinCount\n'
+const generateHeader = () => {
+  return `review_id,restaurant_id,restaurant_name,user_id,date,count_star_ratings,count_checkin,ratings,useful_count,funny_count,cool_count,reviews_count,review\n`;
 }
 
-const generateReview = (name) => {
-  return `${getRandomIntInclusive(1, 10000001)},${name},${getRandomIntInclusive(0, 750)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(1, 100001)},false,false,false,${faker.date.between('2015-01-01', '2018-9-30')},${reviews[getRandomIntInclusive(0, 29)]},${getRandomIntInclusive(0, 8)}\n`
+const generateReview = (reviewId, restaurantId, restaurantName) => {
+  return `${reviewId},${restaurantId},${restaurantName},${getRandomIntInclusive(0, 999999)},${faker.date.between('2015-01-01', '2018-9-30')},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 8)},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 750)},"${reviews[getRandomIntInclusive(0, 29)]}"\n`;
 };
 
 const generateMillionNames = (letter) => {
@@ -73,31 +56,38 @@ const generateMillionNames = (letter) => {
   return allPossibilities;
 };
 
-const generateData = (fileNumber) => {
+const generateAllReviews = (fileNumber) => {
   const letters = 'abcdefghij'.split('');
+
   if (fileNumber === 51) {
+    console.log('done');
     return;
   }
 
   let csvString = '';
+  const set = Math.floor((fileNumber - 1) / 5);
+  let restaurant_id = set * 1000000 + 1;
+  let review_id = (fileNumber - 1) * 1000000;
 
-  let restaurantNames = generateMillionNames(letters[Math.floor(fileNumber / 5)]);
+  let restaurantNames = generateMillionNames(letters[set]);
 
   for (let i = 0; i < 1000000; i++) {
-    const review = generateReview(restaurantNames[i])
+    const review = generateReview(review_id, restaurant_id, restaurantNames[i])
+    restaurant_id++;
+    review_id++;
     csvString += review;
   }
 
-  fs.appendFile(`./reviews/${fileNumber}.csv`, generateHeader(), (err) => {
-    fs.appendFile(`./reviews/${fileNumber}.csv`, csvString, (err) => {
+  fs.appendFile(`./reviews/review${fileNumber}.csv`, generateHeader(), (err) => {
+    fs.appendFile(`./reviews/review${fileNumber}.csv`, csvString, (err) => {
       if (err) {
         console.error(err);
       }
   
       console.log(fileNumber);
-      generateData(fileNumber + 1);
+      generateAllReviews(fileNumber + 1);
     });
-  })
+  });
 };
 
-generateData(1);
+generateAllReviews(1);

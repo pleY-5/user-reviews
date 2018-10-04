@@ -25,4 +25,6 @@ build/
 dist/
 .env
 seeds/
-# dataGeneration/reviews/
+dataGeneration/reviews/
+dataGeneration/users/
+dataGeneration/restaurants/
