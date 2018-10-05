@@ -13,6 +13,9 @@ CREATE TABLE reviews (
     funny_count INTEGER,
     cool_count INTEGER,
     reviews_count INTEGER,
+    useful_clicked BOOLEAN,
+    funny_clicked BOOLEAN,
+    cool_clicked BOOLEAN,
     review VARCHAR(300)
 );
 
