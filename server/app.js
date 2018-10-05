@@ -1,12 +1,12 @@
 const express = require('express');
-
-const app = express();
-
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const routes = require('../routes/reviews.js');
+require('newrelic');
 require('dotenv').config();
+
+const app = express();
 
 const corsOptions = {
   origin: 'http://localhost:3002',
@@ -25,5 +25,3 @@ app.use('/api/reviews', cors(corsOptions), routes);
 app.use(logger('dev'));
 
 module.exports = app;
-
-// app.use('/reviews', cors(corsOptions), routes);

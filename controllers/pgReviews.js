@@ -60,8 +60,9 @@ const parseResponse = (reviews) => {
 
 const fetch = (req, res) => {
   const { nameOrId } = req.params;
+  console.log(nameOrId);
 
-  if (typeof nameOrId === 'number') {
+  if (!isNaN(nameOrId)) {
     requestById(nameOrId, parseResponse, res);
   } else {
     const uppercaseName = nameOrId[0].toUpperCase() + nameOrId[1]

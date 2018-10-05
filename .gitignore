@@ -28,3 +28,4 @@ seeds/
 dataGeneration/reviews/
 dataGeneration/users/
 dataGeneration/restaurants/
+newrelic.js
