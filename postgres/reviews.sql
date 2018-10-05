@@ -1,7 +1,7 @@
 DROP TABLE reviews;
 
 CREATE TABLE reviews (
-    review_id serial PRIMARY KEY,
+    review_id bigserial PRIMARY KEY,
     restaurant_id INTEGER,
     restaurant_name VARCHAR(50),
     user_id INTEGER,

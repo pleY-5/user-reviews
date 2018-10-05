@@ -1,6 +1,7 @@
 const { client } = require('../postgres/pg');
 
 const requestById = (id, cb, res) => {
+  console.log(id);
   const query = `SELECT  * FROM
   (SELECT * FROM reviews WHERE restaurant_id = ${id}) a
   INNER JOIN
@@ -58,9 +59,17 @@ const parseResponse = (reviews) => {
   });
 };
 
+const addReview = (review, res) => {
+  const query = `INSERT INTO reviews(restaurant_id,restaurant_name,user_id,date,count_star_ratings,count_checkin,ratings,useful_count,funny_count,cool_count,reviews_count,useful_clicked,funny_clicked,cool_clicked,review) 
+  VALUES (${review.restaurantId}, '${review.name}', ${review.user_id}, '${review.date}', ${review.count_starRatings}, ${review.count_checkin}, ${review.ratings}, ${review.useful_count}, ${review.funny_count}, ${review.cool_count}, ${review.reviewsCount}, ${review.useful_clicked}, ${review.funny_clicked}, ${review.cool_clicked}, '${review.text_review}');`;
+
+  client.query(query)
+    .then(() => res.sendStatus(201))
+    .catch(err => console.error(err));
+};
+
 const fetch = (req, res) => {
   const { nameOrId } = req.params;
-  console.log(nameOrId);
 
   if (!isNaN(nameOrId)) {
     requestById(nameOrId, parseResponse, res);
@@ -71,4 +80,9 @@ const fetch = (req, res) => {
   }
 };
 
-module.exports = { fetch };
+const add = (req, res) => {
+  const review = JSON.parse(req.body.review);
+  addReview(review, res);
+};
+
+module.exports = { fetch, add };

@@ -31,27 +31,26 @@ const reviews = [
   'Edison bulb church-key disrupt coloring book skateboard narwhal, lo-fi austin hexagon snackwave flannel. Scenester portland listicle, twee helvetica yr shoreditch marfa lyft kinfolk cold-pressed authentic tumblr.',
   'Unicorn hoodie banh mi slow-carb irony lyft hell of mustache VHS edison bulb freegan cronut pickled adaptogen yuccie. Taxidermy pickled blog lomo raw denim photo booth.',
   'Cronut succulents squid etsy venmo photo booth blog lyft umami kombucha fam. Asymmetrical small batch leggings VHS. Typewriter four loko irony umami, vape keffiyeh squid post-ironic. Gastropub locavore disrupt brunch.',
-  'Celiac disrupt chillwave health goth bushwick williamsburg man bun activated charcoal twee hoodie. Meditation adaptogen palo santo, tumeric normcore cardigan tousled mlkshk street art.'
-]
+  'Celiac disrupt chillwave health goth bushwick williamsburg man bun activated charcoal twee hoodie. Meditation adaptogen palo santo, tumeric normcore cardigan tousled mlkshk street art.',
+];
 
 const getRandomIntInclusive = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min; 
+  const newMin = Math.ceil(min);
+  const newMax = Math.floor(max);
+  return Math.floor(Math.random() * (newMax - newMin + 1)) + newMin;
 };
 
-const generateHeader = () => {
-  return `review_id,restaurant_id,restaurant_name,user_id,date,count_star_ratings,count_checkin,ratings,useful_count,funny_count,cool_count,reviews_count,useful_clicked,funny_clicked,cool_clicked,review\n`;
-}
+const generateHeader = () => 'restaurant_id,restaurant_name,user_id,date,count_star_ratings,count_checkin,ratings,useful_count,funny_count,cool_count,reviews_count,useful_clicked,funny_clicked,cool_clicked,review\n';
 
-const generateReview = (reviewId, restaurantId, restaurantName) => {
-  return `${reviewId},${restaurantId},${restaurantName},${getRandomIntInclusive(0, 999999)},${faker.date.between('2015-01-01', '2018-9-30')},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 8)},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 750)},false,false,false,"${reviews[getRandomIntInclusive(0, 29)]}"\n`;
+
+const generateReview = (restaurantId, restaurantName) => {
+  return `${restaurantId},${restaurantName},${getRandomIntInclusive(0, 999999)},${faker.date.between('2015-01-01', '2018-9-30')},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 8)},${getRandomIntInclusive(1, 5)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 3)},${getRandomIntInclusive(0, 750)},false,false,false,"${reviews[getRandomIntInclusive(0, 29)]}"\n`;
 };
 
 const generateMillionNames = (letter) => {
-  var allPossibilities = [];
+  const allPossibilities = [];
   for (let i = 0; i < 1000000; i++) {
-      allPossibilities.push([('TuLan' + i + letter).split(' ').join('')]);
+    allPossibilities.push([('TuLan' + i + letter).split(' ').join('')]);
   }
   return allPossibilities;
 };
@@ -67,14 +66,13 @@ const generateAllReviews = (fileNumber) => {
   let csvString = '';
   const set = Math.floor((fileNumber - 1) / 5);
   let restaurant_id = set * 1000000 + 1;
-  let review_id = (fileNumber - 1) * 1000000;
+
 
   let restaurantNames = generateMillionNames(letters[set]);
 
   for (let i = 0; i < 1000000; i++) {
-    const review = generateReview(review_id, restaurant_id, restaurantNames[i])
+    const review = generateReview(restaurant_id, restaurantNames[i]);
     restaurant_id++;
-    review_id++;
     csvString += review;
   }
 
@@ -90,4 +88,4 @@ const generateAllReviews = (fileNumber) => {
   });
 };
 
-generateAllReviews(34);
+generateAllReviews(2);

@@ -1,0 +1,13 @@
+config:
+  target: "http://localhost:3002"
+  proccesor: "./helper.js"
+  phases:
+    - duration: 30
+      arrivalRate: 50
+  # defaults:
+  #   headers:
+  #     x-my-service-auth: '987401838271002188298567'
+scenarios:
+  - flow:
+    - get:
+        url: "/api/reviews/1"

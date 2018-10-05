@@ -1,10 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const routes = require('../routes/reviews.js');
-require('newrelic');
-require('dotenv').config();
 
 const app = express();
 
