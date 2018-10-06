@@ -40,7 +40,7 @@ const getRandomIntInclusive = (min, max) => {
   return Math.floor(Math.random() * (newMax - newMin + 1)) + newMin;
 };
 
-const generateHeader = () => 'restaurant_id,restaurant_name,user_id,date,count_star_ratings,count_checkin,ratings,useful_count,funny_count,cool_count,reviews_count,useful_clicked,funny_clicked,cool_clicked,review\n';
+const generateHeader = () => 'restaurantId,restaurant_name,user_id,date,count_star_ratings,count_checkin,ratings,useful_count,funny_count,cool_count,reviews_count,useful_clicked,funny_clicked,cool_clicked,review\n';
 
 
 const generateReview = (restaurantId, restaurantName) => {
@@ -70,7 +70,7 @@ const generateAllReviews = (fileNumber) => {
 
   let restaurantNames = generateMillionNames(letters[set]);
 
-  for (let i = 0; i < 1000000; i++) {
+  for (let i = 999900; i < 1000000; i++) {
     const review = generateReview(restaurant_id, restaurantNames[i]);
     restaurant_id++;
     csvString += review;
@@ -88,4 +88,4 @@ const generateAllReviews = (fileNumber) => {
   });
 };
 
-generateAllReviews(2);
+generateAllReviews(50);

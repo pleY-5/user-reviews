@@ -81,7 +81,8 @@ const fetch = (req, res) => {
 };
 
 const add = (req, res) => {
-  const review = JSON.parse(req.body.review);
+  const review = req.body;
+  console.log(review);
   addReview(review, res);
 };
 
