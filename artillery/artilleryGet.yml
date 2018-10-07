@@ -11,6 +11,3 @@ scenarios:
   - flow:
     - get:
         url: "/api/reviews/{{ restaurant_id }}"
-
-
-
