@@ -5,9 +5,11 @@ config:
       arrivalRate: 100
   payload:
     path: "reviewId.csv"
-    fields: 
+    fields:
       - "restaurant_id"
 scenarios:
   - flow:
+    - get:
+        url: "/api/reviews/{{ restaurant_id }}"
     - get:
         url: "/api/reviews/{{ restaurant_id }}"

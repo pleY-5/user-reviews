@@ -70,7 +70,6 @@ const addReview = (review, res) => {
 
 const fetch = (req, res) => {
   const { nameOrId } = req.params;
-
   if (!isNaN(nameOrId)) {
     requestById(nameOrId, parseResponse, res);
   } else {
@@ -82,7 +81,6 @@ const fetch = (req, res) => {
 
 const add = (req, res) => {
   const review = req.body;
-  console.log(review);
   addReview(review, res);
 };
 
