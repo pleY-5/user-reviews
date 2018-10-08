@@ -12,21 +12,10 @@ scenarios:
   - flow:
     - get:
         url: "/api/reviews/{{$randomNumber(1, 2000000)}}"
-        weight: 8    
-    - get:
-        url: "/api/reviews/{{$randomNumber(2000001, 10000000)}}"
-        weight: 2
+    weight: 8
+
   - flow:
     - get:
-        url: "/api/reviews/{{$randomNumber(1, 2000000)}}"
-        weight: 8    
-    - get:
         url: "/api/reviews/{{$randomNumber(2000001, 10000000)}}"
-        weight: 2
-  - flow:
-    - get:
-        url: "/api/reviews/{{$randomNumber(1, 2000000)}}"
-        weight: 8    
-    - get:
-        url: "/api/reviews/{{$randomNumber(2000001, 10000000)}}"
-        weight: 2
+    weight: 2
+
