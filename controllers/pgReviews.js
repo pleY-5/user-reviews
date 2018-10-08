@@ -53,7 +53,6 @@ const cache = (req, res, next) => {
 };
 
 const requestById = (id, cb, res) => {
-  console.log(id);
   const query = `SELECT  * FROM
   (SELECT * FROM reviews WHERE restaurant_id = ${id}) a
   INNER JOIN
@@ -66,12 +65,11 @@ const requestById = (id, cb, res) => {
       res.send(cb(data.rows))
       return data;
     })
-    .then(data => redisClient.set(id, JSON.stringify(data.rows), redis.print))
+    .then(data => redisClient.set(id, JSON.stringify(data.rows), 'EX', 10))
     .catch(err => console.error(err));
 };
 
 const requestByName = (name, cb, res) => {
-  console.log(name);
   const query = `SELECT  * FROM
   (SELECT * FROM reviews WHERE restaurant_name = '${name}') a
   INNER JOIN
@@ -99,7 +97,6 @@ const addReview = (review, res) => {
 
 const fetch = (req, res) => {
   const { nameOrId } = req.params;
-
 
   if (!isNaN(nameOrId)) {
     requestById(nameOrId, parseResponse, res);

@@ -1,19 +1,32 @@
+require('newrelic');
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const logger = require('morgan');
+const cluster = require('cluster');
+const numCPUs = require('os').cpus().length;
+
 const { router } = require('../routes/reviews.js');
 
-const app = express();
+if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
 
-app.use(bodyParser.urlencoded({ extended: true }));
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
 
-app.use(bodyParser.json());
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`worker ${worker.process.pid} died`);
+  });
+} else {
+  const app = express();
 
-app.use('/:id', express.static('./public'));
-app.use('/api/reviews', router);
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json());
 
+  app.use('/:id', express.static('./public'));
+  app.use('/api/reviews', router);
 
-app.use(logger('dev'));
+  const PORT = process.env.PORT || 3002;
 
-module.exports = { app };
+  app.listen(PORT, () => console.log(`App is listening on port: ${PORT}`));
+}
