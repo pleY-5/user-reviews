@@ -2,9 +2,9 @@ config:
   target: "http://localhost:3002"
   phases:
     - duration: 60
-      arrivalRate: 100
+      arrivalRate: 150
   payload:
-    path: "reviewId.csv"
+    path: "reviewId2.csv"
     fields:
       - "restaurant_id"
 scenarios:

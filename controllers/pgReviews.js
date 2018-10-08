@@ -1,32 +1,9 @@
+const redis = require('redis');
 const { client } = require('../postgres/pg');
 
-const requestById = (id, cb, res) => {
-  console.log(id);
-  const query = `SELECT  * FROM
-  (SELECT * FROM reviews WHERE restaurant_id = ${id}) a
-  INNER JOIN
-  (SELECT * FROM users) b
-  ON a.user_id = b.user_id;
-  `;
+const { REDIS_PORT } = process.env;
 
-  client.query(query)
-    .then(data => res.send(cb(data.rows)))
-    .catch(err => console.error(err));
-};
-
-const requestByName = (name, cb, res) => {
-  console.log(name);
-  const query = `SELECT  * FROM
-  (SELECT * FROM reviews WHERE restaurant_name = '${name}') a
-  INNER JOIN
-  (SELECT * FROM users) b
-  ON a.user_id = b.user_id;
-  `;
-
-  client.query(query)
-    .then(data => res.send(cb(data.rows)))
-    .catch(err => console.error(err));
-};
+const redisClient = redis.createClient(REDIS_PORT);
 
 const parseResponse = (reviews) => {
   return reviews.map((review) => {
@@ -59,6 +36,58 @@ const parseResponse = (reviews) => {
   });
 };
 
+const cache = (req, res, next) => {
+  const { nameOrId } = req.params;
+
+  redisClient.get(nameOrId, (err, data) => {
+    if (err) {
+      throw err;
+    }
+
+    if (data !== null) {
+      res.send(parseResponse(JSON.parse(data)));
+    } else {
+      next();
+    }
+  });
+};
+
+const requestById = (id, cb, res) => {
+  console.log(id);
+  const query = `SELECT  * FROM
+  (SELECT * FROM reviews WHERE restaurant_id = ${id}) a
+  INNER JOIN
+  (SELECT * FROM users) b
+  ON a.user_id = b.user_id;
+  `;
+
+  client.query(query)
+    .then(data => {
+      res.send(cb(data.rows))
+      return data;
+    })
+    .then(data => redisClient.set(id, JSON.stringify(data.rows), redis.print))
+    .catch(err => console.error(err));
+};
+
+const requestByName = (name, cb, res) => {
+  console.log(name);
+  const query = `SELECT  * FROM
+  (SELECT * FROM reviews WHERE restaurant_name = '${name}') a
+  INNER JOIN
+  (SELECT * FROM users) b
+  ON a.user_id = b.user_id;
+  `;
+
+  client.query(query)
+    .then(data => {
+      res.send(cb(data.rows))
+      return data;
+    })
+    .then(data => redisClient.set(name, JSON.stringify(data.rows), redis.print))
+    .catch(err => console.error(err));
+};
+
 const addReview = (review, res) => {
   const query = `INSERT INTO reviews(restaurant_id,restaurant_name,user_id,date,count_star_ratings,count_checkin,ratings,useful_count,funny_count,cool_count,reviews_count,useful_clicked,funny_clicked,cool_clicked,review) 
   VALUES (${review.restaurantId}, '${review.name}', ${review.user_id}, '${review.date}', ${review.count_starRatings}, ${review.count_checkin}, ${review.ratings}, ${review.useful_count}, ${review.funny_count}, ${review.cool_count}, ${review.reviewsCount}, ${review.useful_clicked}, ${review.funny_clicked}, ${review.cool_clicked}, '${review.text_review}');`;
@@ -70,6 +99,8 @@ const addReview = (review, res) => {
 
 const fetch = (req, res) => {
   const { nameOrId } = req.params;
+
+
   if (!isNaN(nameOrId)) {
     requestById(nameOrId, parseResponse, res);
   } else {
@@ -84,4 +115,4 @@ const add = (req, res) => {
   addReview(review, res);
 };
 
-module.exports = { fetch, add };
+module.exports = { fetch, add, cache };
