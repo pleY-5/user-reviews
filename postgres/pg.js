@@ -1,7 +1,7 @@
 require('dotenv').config();
 const pg = require('pg');
 
-const client = new pg.Client({
+const client = new pg.Pool({
   host: 'localhost',
   port: 5432,
   user: process.env.PG_USER,

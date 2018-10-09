@@ -1,8 +1,8 @@
 config:
   target: "http://localhost:3002"
   phases:
-    - duration: 60
-      arrivalRate: 250
+    - duration: 25
+      arrivalRate: 600
   # payload:
   #   path: "reviewId.csv"
   #   fields:
