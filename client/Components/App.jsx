@@ -1,4 +1,3 @@
-/* global document */
 import React, { Component } from "react";
 import ReviewEntry from "./ReviewEntry/ReviewEntry.jsx";
 // import Search from "./Search/Search.jsx";
@@ -11,7 +10,7 @@ class App extends Component {
     this.state = {
       allData: [],
       current: [],
-      average: 0
+      average: 0,
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleCount = this.handleCount.bind(this);
@@ -77,11 +76,12 @@ class App extends Component {
       axios
         .get(`/api/reviews/${id}`)
         .then(response => {
-          console.log(response);
+
           const current = response.data.map(rev => {
             rev.vote = false;
             return rev;
           });
+
           this.setState({
             current
           });

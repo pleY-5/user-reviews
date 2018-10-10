@@ -1,5 +1,5 @@
-const app = require("./app.js");
-const PORT = process.env.PORT || 3002;
-app.listen(PORT, () => console.log(`App is listening on port: ${PORT}`));
+// require('newrelic');
+// const { app } = require('./app.js');
 
-module.exports = app;
+// const PORT = process.env.PORT || 3002;
+// app.listen(PORT, () => console.log(`App is listening on port: ${PORT}`));

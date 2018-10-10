@@ -1,24 +1,21 @@
+require('dotenv').config();
 const pg = require('pg');
-const path = require('path');
-
 
 const client = new pg.Client({
-  host: 'localhost',
+  host: 'ec2-34-219-27-236.us-west-2.compute.amazonaws.com',
   port: 5432,
-  user: 'charliephan',
-  password: '',
+  user: process.env.PG_USER,
+  password: process.env.PG_PASS,
   database: 'yelp',
 });
 
 client.connect((err) => {
   if (err) {
-    console.error('connection error', err.stack);
-    return;
-  } else {
-    console.log('connected');
+    return console.error('connection error', err.stack);
   }
+  console.log('connected to postgres');
 });
 
 module.exports = {
-  client
-}
+  client,
+};
