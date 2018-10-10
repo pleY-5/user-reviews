@@ -11,4 +11,3 @@ client.query(`COPY restaurants FROM '${restaurantsPath}' DELIMITER ',' CSV HEADE
   console.log('done');
   client.end();
 });
-
