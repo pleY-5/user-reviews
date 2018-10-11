@@ -2,8 +2,9 @@ const redis = require('redis');
 const { client } = require('../postgres/pg');
 
 const { REDIS_PORT } = process.env;
+const { REDIS_URL } = process.env;
 
-const redisClient = redis.createClient(REDIS_PORT);
+const redisClient = redis.createClient(REDIS_PORT, REDIS_URL);
 
 const parseResponse = (reviews) => {
   return reviews.map((review) => {
