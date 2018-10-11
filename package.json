@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "webpack --mode production --watch",
-    "start": "nodemon server/app.js",
+    "start": "node server/app.js",
     "seed": "nodemon dataGenerator.js && seed",
     "test": "jest test"
   },
