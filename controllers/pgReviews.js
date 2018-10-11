@@ -83,7 +83,7 @@ const requestByName = (name, cb, res) => {
       res.send(cb(data.rows))
       return data;
     })
-    .then(data => redisClient.set(name, JSON.stringify(data.rows), redis.print))
+    // .then(data => redisClient.set(name, JSON.stringify(data.rows), redis.print))
     .catch(err => console.error(err));
 };
 
