@@ -1,10 +1,10 @@
 const redis = require('redis');
 const { client } = require('../postgres/pg');
 
-const { REDIS_PORT } = process.env;
-const { REDIS_URL } = process.env;
+// const { REDIS_PORT } = process.env;
+// const { REDIS_URL } = process.env;
 
-const redisClient = redis.createClient(REDIS_PORT, REDIS_URL);
+// const redisClient = redis.createClient(REDIS_PORT, REDIS_URL);
 
 const parseResponse = (reviews) => {
   return reviews.map((review) => {
@@ -66,7 +66,7 @@ const requestById = (id, cb, res) => {
       res.send(cb(data.rows))
       return data;
     })
-    .then(data => redisClient.set(id, JSON.stringify(data.rows), 'EX', 10))
+    // .then(data => redisClient.set(id, JSON.stringify(data.rows), 'EX', 10))
     .catch(err => console.error(err));
 };
 
